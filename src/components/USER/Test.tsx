@@ -100,13 +100,12 @@ export const Test = () => {
         console.log(webcamRef);
         if (webcamRef.current) {
             console.log('deeji', webcamRef)
-            setInterval(() => {
                 takePhoto()
                 setTimeout(() => {
                     // sendImg();
                 }, 4000);
                 console.log('Test is runnning')
-            }, 5000)
+          
             webcamRef.current
                 .start()
                 .then(result => {
