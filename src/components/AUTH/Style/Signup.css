@@ -1,0 +1,43 @@
+.AuthCard {
+    border-radius: 20px;
+    /* box-shadow: -9px 9px 11px black; */
+    background: hsl(240deg 75% 3.14%);
+}
+
+.AuthCard ion-item {
+    font-size: 13px;
+    --background: transparent !important;
+}
+
+.BackgroundSignUp {
+    background: hsl(232.17deg 21.5% 20.98%) !important;
+}
+
+.AuthPages {
+    height: 120vh;
+}
+
+.alert-wrapper {
+    background-color: #01010a !important;
+}
+
+
+@media (prefers-color-scheme: light) {
+    .AuthCard {
+        border-radius: 20px;
+        /* box-shadow: -5px 5px 15px 2px black; */
+
+        background: hsla(0, 0%, 87%, 0.607)
+    }
+
+    ion-col,
+    ion-toolbar {
+        background: white
+    }
+
+    .alert-wrapper {
+        background-color: var(--ion-color-light) !important;
+    }
+
+
+}

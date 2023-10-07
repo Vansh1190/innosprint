@@ -1,0 +1,27 @@
+/* src/Certificate.css */
+.certificate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #f0f0f0; */
+  
+    height: 100vh;
+  }
+  
+  .certificate-content {
+    text-align: center;
+    /* background-color: #fff; */
+    background: url('./certificate.png') no-repeat center/cover;
+    border: 2px solid #333;
+    padding: 20px;
+    height: 550px;
+    border-radius: 10px;
+  }
+  
+  h1, h2, h3 {
+    margin: 10px 0;
+  }
+  
+  p {
+    margin: 5px 0;
+  }

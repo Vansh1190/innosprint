@@ -1,0 +1,16 @@
+#RegisterForm{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-flow: column;
+}
+#RegisterForm ion-item{
+    width: 60%;
+}
+
+@media (width < 500px) {
+    #RegisterForm ion-item{
+        width: 80%;
+    }
+    
+}
