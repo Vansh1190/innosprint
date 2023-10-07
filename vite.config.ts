@@ -8,9 +8,16 @@ export default defineConfig({
     react(),
     legacy()
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+  build: {
+    // Other build options...
+    rollupOptions: {
+      // Ensure axios is not marked as external
+      external: ['axios'],
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/setupTests.ts',
+    },
   }
 })
