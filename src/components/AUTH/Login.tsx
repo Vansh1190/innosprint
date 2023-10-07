@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonItem, IonPage, useIonRouter } from "@ionic/react";
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonItem, IonPage, useIonRouter, useIonToast } from "@ionic/react";
 import { ReactNode, useEffect, useState } from "react";
 import { IonInputNew } from "../../components/CustomComp/IonInputNew";
 import { IonSelectNew } from "../../components/CustomComp/IonSelectNew";
@@ -10,10 +10,11 @@ import Axios from "axios";
 // import { useStoreActions, useStoreState } from "easy-peasy";
 // import { refreshState } from "../../components/CustomFunctions/refreshState";
 
-export const Login: React.FC<any> = ({ isLoggesIn, updateUserRole }) => {
+export const Login: React.FC<any> = ({ isLoggesIn, UserInfo }) => {
   const router = useIonRouter();
 
-  const [email, setEmail] = useState("s@gmail.ac.in");
+  const [email, setEmail] = useState("s@gmail.com");
+  const [showToast] = useIonToast();
   const [password, setPassword] = useState("47859636");
   const [error, setError] = useState<any>({})
   useEffect(() => {
@@ -31,6 +32,7 @@ export const Login: React.FC<any> = ({ isLoggesIn, updateUserRole }) => {
     }).then((e) => {
       console.log(e);
       if (e.data.success) {
+        showToast('User Logged In Successfully', 3000)
         localStorage.setItem('Identity', e.data.authtoken);
         // console.log(isLoggesIn)
         isLoggesIn(true);
@@ -40,18 +42,22 @@ export const Login: React.FC<any> = ({ isLoggesIn, updateUserRole }) => {
           }
         }).then((res) => {
           console.log(res);
-          updateUserRole(res.data.user.role)
+          UserInfo(res.data.user.role)
           localStorage.setItem('Identity2', res.data.user.role)
-          router.push('/home')
+          router.push('/test')
         }).catch((er) => {
           console.log(er);
         })
+      }
+      else {
+        showToast(e.data.message, 3000)
+        router.push('/verify');
       }
     }).catch((err) => {
       console.log(err);
     })
   }
-
+  
   // if (localStorage.getItem('email')) {
   //   setEmail(localStorage.getItem('email'))
   // }

@@ -1,0 +1,4 @@
+.ExamContainer {
+    display: flex;
+    justify-content: space-between;
+}

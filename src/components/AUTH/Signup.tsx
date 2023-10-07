@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonItem, IonPage, useIonRouter } from "@ionic/react";
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonItem, IonPage, useIonAlert, useIonRouter, useIonToast } from "@ionic/react";
 import { ReactNode, useEffect, useState } from "react";
 import { IonInputNew } from "../../components/CustomComp/IonInputNew";
 import { IonSelectNew } from "../../components/CustomComp/IonSelectNew";
@@ -13,7 +13,7 @@ import Axios from "axios";
 export const Signup: React.FC<any> = ({ onSubmit, loading }) => {
   const router = useIonRouter();
   const [fullName, setFullName] = useState("dwdwwdd");
-  const [email, setEmail] = useState("dwdww@gndec.ac.in");
+  const [email, setEmail] = useState("dwdww@gmail.com");
   const [phoneNumber, setPhoneNumber] = useState("8585858585");
   const [password, setPassword] = useState("47859636");
   const [gender, setGender] = useState("male");
@@ -21,6 +21,7 @@ export const Signup: React.FC<any> = ({ onSubmit, loading }) => {
   const [error, setError] = useState<any>({})
   const [dataLoaded, setDataLoaded] = useState(false);
 
+  const [showToast] = useIonToast();
   useEffect(() => {
     setDataLoaded(true);
   }, [])
@@ -36,8 +37,11 @@ export const Signup: React.FC<any> = ({ onSubmit, loading }) => {
       gender: gender,
       progressValue:'2'
     }).then((e) => {
+      showToast('User Registered Successfully',4000);
       console.log(e);
+    
     }).catch((err) => {
+      showToast('Already Existed ' + err.response.data.message, 3000)
       console.log(err);
     })
   }
@@ -89,7 +93,7 @@ export const Signup: React.FC<any> = ({ onSubmit, loading }) => {
                   error={error?.password}
                 />
                
-                <IonInputNew
+                {/* <IonInputNew
                   title="Phone Number"
                   maxlength={10}
                   type='tel'
@@ -105,7 +109,7 @@ export const Signup: React.FC<any> = ({ onSubmit, loading }) => {
                   onChange={setGender}
                   data={GENDER}
                   error={error?.gender}
-                />
+                /> */}
                 <IonItem lines="none">
                   <IonCheckbox style={{ maxWidth: '15%' }} color="danger" checked={acknowledgement} onIonChange={e => setAcknowledgement(!acknowledgement)} />
                   <p style={{ maxWidth: "85%", textAlign: "justify", margin: "20px auto 0 auto" }}>

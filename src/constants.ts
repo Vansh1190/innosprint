@@ -39,22 +39,22 @@ export const ICON:any = {
   download: cloudDownloadOutline
 }
 
-const API_BASE_URL = 'https://sih-gndec-backend.onrender.com'
+const API_BASE_URL = 'http://localhost:8000'
 
 export const API = {
-  LOGIN: `${API_BASE_URL}/api/login`,
-  SIGNUP: `${API_BASE_URL}/api/useraccount`,
+  LOGIN: `${API_BASE_URL}/api/auth/login`,
+  SIGNUP: `${API_BASE_URL}/api/auth/signup`,
   SOCIETY_SIGNUP: `${API_BASE_URL}/api/societyaccount`,
   // ME: "/me",
 
   // ALL_USERS: "/users",
-  VERIFY_USER: `${API_BASE_URL}/api/sendotp`,
+  VERIFY_USER: `${API_BASE_URL}/api/validate/sendotp`,
   VERIFY_USER_NOW: `${API_BASE_URL}/api/mannually/userverify`,
-  VERIFY_OTP: `${API_BASE_URL}/api/verify`,
+  VERIFY_OTP: `${API_BASE_URL}/api/validate/verify`,
   RECORD_USER_DETAILS: `${API_BASE_URL}/api/auth/academicinfo`,
   FORGET_PASSWORD: `${API_BASE_URL}/api/password/forgotpassword`,
   RESET_PASSWORD: `${API_BASE_URL}/api/password/resetpassword`,
-  GET_USERINFO: `${API_BASE_URL}/api/getuser`,
+  GET_USERINFO: `${API_BASE_URL}/api/users/getuser`,
   GET_SOCIETYINFO: `${API_BASE_URL}/api/societyuser`,
   GET_ALLWINNERS: `${API_BASE_URL}/api/view/resultall`,
 
@@ -66,7 +66,8 @@ export const API = {
   IS_CERTIFICATES_LOCKED: `${API_BASE_URL}/api/iscertificate`,
   TOGGLE_CERTIFICATE_LOCK: `${API_BASE_URL}/api/sendcertificate`,
   // MARK_UNMARKED_ABSENT: "/event/attendance/kill`,
-  MARK_RESULT: `${API_BASE_URL}/api/result/update`,
+  TAKE_PIC_REGISTER_EXAM: `${API_BASE_URL}/api/image/registerimage`,
+  TAKE_PIC_VERIFY_USER: `${API_BASE_URL}/api/image/checkimage`,
   DELETE_USER_EVENT: `${API_BASE_URL}/api/update/deleteevent`,
   ADD_USER_EVENT: `${API_BASE_URL}/api/update/addevent`,
   TOGGLE_EVENT: `${API_BASE_URL}/api/enable/event`,

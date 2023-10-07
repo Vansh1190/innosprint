@@ -1,23 +1,26 @@
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonRadio, IonRadioGroup, IonAlert, IonModal, IonCard, IonCardHeader } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonRadio, IonRadioGroup, IonAlert, IonModal, IonCard, IonCardHeader, IonCardTitle, useIonToast } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from 'webcam-easy';
+import './RegisterExam.css'
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Axios from "axios";
 import { API } from "../../constants";
 
-export const Test = () => {
+export const RegisterExam = () => {
+
     const [SelectedAnswer, setSelectedAnswer] = useState('')
     const [TestStarted, setTestStarted] = useState(false)
     const [pic, setPic] = useState(false)
-    const [TestRunning, setTestRunning] = useState(false)
     const [WebCamStatus, setWebCamStatus] = useState('')
     const [isAlertOpen, setisAlertOpen] = useState(false);
 
     const webcamElementRef = useRef(null);
     const canvasElementRef = useRef(null);
     const webcamRef = useRef(null);
+
+    const [showToast] = useIonToast();
 
     useEffect(() => {
 
@@ -44,7 +47,6 @@ export const Test = () => {
 
     const handleSubmit = () => {
         // You can add your logic to check the selected answer and provide feedback here
-        
         alert(`Selected Answer: ${SelectedAnswer}`);
     };
 
@@ -55,10 +57,10 @@ export const Test = () => {
         return new Blob([ab], { type: mimeString });
     };
     
-    
+
+      
     const takePhoto = () => {
         if (webcamRef.current) {
-            console.log("picture taken")
           const picture = webcamRef.current.snap();
           setPic(picture);
         }
@@ -68,45 +70,35 @@ export const Test = () => {
         if (pic) {
           const formData = new FormData();
           const imageBlob = dataURItoBlob(pic);
-          formData.append('image', imageBlob, 'stickers.jpg')
-            
-          Axios.post(API.TAKE_PIC_VERIFY_USER, formData, {
+          console.log(formData)
+          formData.append('image', imageBlob, 'stickers.jpg');
+    
+          Axios.post(API.TAKE_PIC_REGISTER_EXAM, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
-                "auth-token": localStorage.getItem('Identity'), // Replace with your auth token
+                "auth-token": localStorage.getItem('Identity') // Replace with your auth token
               },
             })
             .then(res => {
               console.log(res);
+              showToast(res.data.message, 4000);
+              
             })
             .catch(err => {
+                
+              showToast(err.response.data.message, 4000);
               console.log(err);
             });
         }
       };
 
-      useEffect(() => {
-        if(pic){    
-      
-            sendImg()
-        }
-      }, [pic])
-    if(TestRunning){
-        console.log('Test is runnning')
-    }
+
     const StartTest = () => {
         // setTestStarted(true)
         // document.documentElement.requestFullscreen();
         console.log(webcamRef);
         if (webcamRef.current) {
             console.log('deeji', webcamRef)
-            setInterval(() => {
-                takePhoto()
-                setTimeout(() => {
-                    // sendImg();
-                }, 4000);
-                console.log('Test is runnning')
-            }, 5000)
             webcamRef.current
                 .start()
                 .then(result => {
@@ -131,14 +123,14 @@ export const Test = () => {
                         <IonButtons slot="start">
                             <IonMenuButton />
                         </IonButtons>
-                        <IonTitle>{'TEST'}</IonTitle>
+                        <IonTitle>{'Register for Exam'}</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>
                     <IonAlert
                         isOpen={isAlertOpen}
-                        header="Confirm before Starting Exam"
-                        message={'Are You sure you want to start the exam'}
+                        header="Required Camera Access"
+                        message={'Allow Camera permissions'}
                         buttons={[
                             {
                                 text: 'Cancel',
@@ -157,7 +149,15 @@ export const Test = () => {
                         ]}
                     >
                     </IonAlert>
-                    <IonButton onClick={() => { setisAlertOpen(true) }}>Start Test</IonButton>
+                    <IonCard>
+                        <IonCardHeader>
+
+                    <IonCardTitle className="ExamContainer">
+                        Exam Name - App Development Course
+                        <IonButton  onClick={() => { setisAlertOpen(true) }}>Start Test</IonButton>
+                    </IonCardTitle>
+                        </IonCardHeader>
+                    </IonCard>
                 </IonContent>
             </IonPage>
         )
@@ -184,36 +184,18 @@ export const Test = () => {
                     
 
 
-                <IonModal id="StartTestModal" isOpen = {true}>
+                <IonModal id="StartTestModal" isOpen = {true} >
                     <IonCard>
                         <IonCardHeader>
 
-                        <IonTitle>Please Do not Change Tabs and Exit FullScreen Mode</IonTitle>
+                        <IonTitle>Please Be in a Well Suited Ennvironment with proper lighting</IonTitle>
                         </IonCardHeader>
                     </IonCard>
-                    <IonButton onClick={() => {StartTest(); document.getElementById('StartTestModal').dismiss() }}>I Understand</IonButton>
+                    <IonButton onClick={() => {StartTest(); document.getElementById('StartTestModal').dismiss() }}>
+                        I Understand</IonButton>
                 </IonModal>
-
-
-                <IonRadioGroup onIonChange={handleAnswerChange} value={SelectedAnswer}>
-                    <IonLabel>Which framework is commonly used for building mobile apps with Ionic and ReactJS?</IonLabel>
-                    <IonItem>
-                        <IonRadio value="A" >A) Angular</IonRadio>
-                        <IonLabel></IonLabel>
-                    </IonItem>
-                    <IonItem>
-                        <IonRadio value="B" >B) Vue.js</IonRadio>
-                    </IonItem>
-                    <IonItem>
-                        <IonRadio value="C" >C) jQuery</IonRadio>
-                    </IonItem>
-                    <IonItem>
-                        <IonRadio value="D" >D) Flutter</IonRadio>
-                    </IonItem>
-                </IonRadioGroup>
-                <IonButton expand="full" onClick={handleSubmit}>Submit</IonButton>
-                {/* <IonButton expand="full" onClick={takePhoto}>takePhoto</IonButton>
-                <IonButton expand="full" onClick={sendImg}>Send img</IonButton> */}
+                <IonButton expand="full" onClick={takePhoto}>takePhoto</IonButton>
+                <IonButton expand="full" onClick={sendImg}>Submit img</IonButton>
 
             </IonContent>
         </IonPage>
@@ -221,4 +203,4 @@ export const Test = () => {
 
 }
 
-export default Test;
+export default RegisterExam;

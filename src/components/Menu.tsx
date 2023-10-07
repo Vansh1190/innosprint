@@ -78,7 +78,7 @@ const Menu: React.FC = ({ UserData }: any) => {
     role: 'user'
   });
   // const UserInfo = useStoreState<any>((state) => state.UserInfo)
-
+  const denied_routes = ['/login', '/signup' ]
   return (
     <IonMenu contentId="main" type="overlay"  >
       <IonContent>
@@ -89,6 +89,13 @@ const Menu: React.FC = ({ UserData }: any) => {
           <IonMenuToggle  autoHide={false}>
             
             {MenuPages.map((MenuItem, index) => {
+              if(denied_routes.includes(location.pathname)){
+                return (
+                  <IonItem key={index}>
+
+                  </IonItem>
+                )
+              }
               // console.log(MenuItem)
               if (UserInfo.role === 'superAdmin') {
                 return (

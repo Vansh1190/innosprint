@@ -26,11 +26,17 @@ import Test from './components/USER/Test';
 import Certificate from './components/USER/Certificate/Certificate';
 import Login from './components/AUTH/Login';
 import Signup from './components/AUTH/Signup';
+import Verification from './components/AUTH/Verification';
+import { useState } from 'react';
+import RegisterExam from './components/USER/RegisterExam';
 // import Page from './components/AUTH/Page';
 
 setupIonicReact();
 
 const App: React.FC = () => {
+
+  const [UserInfo, setUserInfo] = useState('')
+  const [LoggedIn, setLoggedIn] = useState('')
 
   return (
     <IonApp>
@@ -44,14 +50,20 @@ const App: React.FC = () => {
             <Route path="/Test" exact={true}>
               <Test />
             </Route>
+            <Route path="/RegisterExam" exact={true}>
+              <RegisterExam />
+            </Route>
             <Route path="/Certificate" exact={true}>
               <Certificate />
             </Route>
             <Route path="/login" exact={true}>
-              <Login />
+              <Login isLoggesIn = {setLoggedIn} UserInfo = {setUserInfo}/>
             </Route>
             <Route path="/signup" exact={true}>
-              {/* <Signup /> */}
+              <Signup />
+            </Route>
+            <Route path="/verify" exact={true}>
+              <Verification />
             </Route>
           </IonRouterOutlet>
         </IonSplitPane>

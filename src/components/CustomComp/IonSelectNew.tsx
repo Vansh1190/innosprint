@@ -7,7 +7,7 @@ import {
   IonSelectOption,
   IonText,
 } from "@ionic/react";
-import { ConstantData, ICON } from "../../../constants";
+import { ConstantData, ICON } from "../../constants";
 
 interface IProps {
   title?: string,

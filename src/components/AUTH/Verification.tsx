@@ -1,21 +1,21 @@
 import { IonAlert, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonCol, IonContent, IonGrid, IonItem, IonLoading, IonPage, useIonRouter, useIonToast } from "@ionic/react";
 import { ReactNode, useEffect, useState } from "react";
-import { IonInputNew } from "../components/CustomComp/IonInputNew";
-import { IonSelectNew } from "../components/CustomComp/IonSelectNew";
+import { IonInputNew } from "../../components/CustomComp/IonInputNew";
+import { IonSelectNew } from "../../components/CustomComp/IonSelectNew";
 import { API, GENDER, REGEX } from "../../constants";
 import './Style/Login.css'
 // import IonProgress from "../components/CustomComp/IonProgress";
 import Axios from 'axios';
 import { contractOutline, settings } from "ionicons/icons";
 // import { SignupData } from "../../interface";
-import { PageLayout } from "../components/CustomComp/PageLayout";
+import { PageLayout } from "../../components/CustomComp/PageLayout";
 // import { useStoreState } from 'easy-peasy'
 
 export const Verification: React.FC<any> = () => {
     const router = useIonRouter();
 
     const [showToast] = useIonToast();
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("s@gmail.com");
     const [OtpSent, setOtpSent] = useState(false);
     const [Otp, setOtp] = useState('');
     const [error, setError] = useState<any>({})
@@ -71,7 +71,7 @@ export const Verification: React.FC<any> = () => {
             setLoading(false);
             localStorage.setItem('stage', '3')
             setTimeout(() => {
-                router.push('/auth')
+                router.push('/login')
             }, 900);
         }).catch((err) => {
             setLoading(false);
