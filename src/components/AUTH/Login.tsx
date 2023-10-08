@@ -32,6 +32,7 @@ export const Login: React.FC<any> = ({ isLoggesIn, UserInfo }) => {
     }).then((e) => {
       console.log(e);
       if (e.data.success) {
+        localStorage.setItem('email', email);
         showToast('User Logged In Successfully', 3000)
         localStorage.setItem('Identity', e.data.authtoken);
         // console.log(isLoggesIn)

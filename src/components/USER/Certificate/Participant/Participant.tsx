@@ -4,8 +4,8 @@ import { PDFDocument, rgb, degrees, StandardFonts } from "pdf-lib";
 import "./Participant.css";
 // import { capitalCase } from "change-case";
 import { Capacitor } from "@capacitor/core";
-// import { Directory, Filesystem } from "@capacitor/filesystem";
-// import { FileOpener } from "@capacitor-community/file-opener";
+import { Directory, Filesystem } from "@capacitor/filesystem";
+import { FileOpener } from "@capacitor-community/file-opener";
 
 const Certificate: React.FC = ({ UserData }: any) => {
   const [Locked, setLocked] = useState(false);
@@ -55,14 +55,23 @@ const Certificate: React.FC = ({ UserData }: any) => {
       position = '3rd Position';
       break;
   }
+  // const UserInfo = {
+  //   Name: capitalCase(UserData[1].name),
+  //   URN: UserData[1].urn,
+  //   Branch: branch,
+  //   Position: 'Paticipant',
+  //   SrNo: `Serial No: SP/ATH/23-24/${UserData[1].urn}`,
+  //   Event: UserData[0].EventName,
+  // }
   const UserInfo = {
-    Name: capitalCase(UserData[1].name),
-    URN: UserData[1].urn,
-    Branch: branch,
+    Name: 'Vansh',
+    URN: '2104212',
+    Branch: 'CSE',
     Position: 'Paticipant',
-    SrNo: `Serial No: SP/ATH/23-24/${UserData[1].urn}`,
-    Event: UserData[0].EventName,
+    SrNo: `Serial No: SP/ATH/23-24/67}`,
+    Event: 'Innosprint Hackathon',
   }
+
 
   console.log(UserData)
   console.log(UserInfo)
@@ -97,10 +106,10 @@ const Certificate: React.FC = ({ UserData }: any) => {
       const nameY = height / 2 - lineHeight - 8;
       console.log(nameX, nameY);
 
-      const crnX = 517 + (134 - crnWidth) / 2;
+      const crnX = 400 + (134 - crnWidth) / 2;
       const crnY = height - 378;
 
-      const BranchX = 252 + (167 - BranchWidth) / 2;
+      const BranchX = 160 + (167 - BranchWidth) / 2;
       const BranchY = height - 378;
 
 

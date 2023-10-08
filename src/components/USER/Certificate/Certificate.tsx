@@ -12,14 +12,15 @@ import { IonInputNew } from '../../CustomComp/IonInputNew';
 const Certificate: React.FC = () => {
     // const UserInfo = useStoreState<any>((state) => state.UserInfo);
 
-    const [MyEvents, setMyEvents] = useState([]);
+    const [MyEvents, setMyEvents]:any = useState([]);
     const [UserInfo, setUserInfo] = useState([]);
     const [IsCertificateVisible, setIsCertificateVisible] = useState(false);
     const [IsPageRefreshed, setIsPageRefreshed] = useState(false);
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState(localStorage.getItem('email') || '');
+
     const [password, setpassword] = useState('')
 
-
+    console.log(email)
     // console.log(UserInfo);
     const [showToast] = useIonToast()
     const ToggleCertificateLock = () => {
@@ -53,26 +54,26 @@ const Certificate: React.FC = () => {
     },[UserInfo])
 
     useEffect(() => {
-        Axios.get(API.IS_CERTIFICATES_LOCKED).then((res) => {
-            // console.log(res);
-            setIsCertificateVisible(res.data.isShowCertificate)
-            if (res.data.isShowCertificate) {
-                Axios.get(API.GET_USER_ENROLLMENTS, {
-                    headers: {
-                        'auth-token': localStorage.getItem('Identity'),
-                    }
-                }).then((e) => {
-                    // console.log(e);
-                    setMyEvents(e.data)
-                }).catch((err) => {
-                    console.log(err.response.data.message);
-                    showToast(err.response.data.message, 2500)
+        // Axios.get(API.IS_CERTIFICATES_LOCKED).then((res) => {
+        //     // console.log(res);
+        //     setIsCertificateVisible(res.data.isShowCertificate)
+        //     if (res.data.isShowCertificate) {
+        //         Axios.get(API.GET_USER_ENROLLMENTS, {
+        //             headers: {
+        //                 'auth-token': localStorage.getItem('Identity'),
+        //             }
+        //         }).then((e) => {
+        //             // console.log(e);
+        //             setMyEvents(e.data)
+        //         }).catch((err) => {
+        //             console.log(err.response.data.message);
+        //             showToast(err.response.data.message, 2500)
 
-                })
-            }
-        }).catch((errr) => {
-            console.log(errr);
-        })
+        //         })
+        //     }
+        // }).catch((errr) => {
+        //     console.log(errr);
+        // })
     }, [IsPageRefreshed])
 
     const GetCertificates = () => {
@@ -82,9 +83,10 @@ const Certificate: React.FC = () => {
         }).then((e) =>{
             console.log(e)
             setUserInfo(e.data.user)
-            setMyEvents(e.data.events)
+            setMyEvents(['Innosprint Hackathon' ])
         }).catch((err) => {
             console.log(err);
+            setMyEvents(['Innosprint Hackathon' ])
         })
     }
     // if (!UserInfo.email) {
