@@ -52,6 +52,7 @@ export const Test = () => {
         console.log(base64Data)
         const parts = base64Data.split(';base64,');
         const decodedData = window.atob(parts[1]);
+        console.log(decodedData)
         const byteArrays = [];
         for (let offset = 0; offset < decodedData.length; offset += sliceSize) {
           const slice = decodedData.slice(offset, offset + sliceSize);

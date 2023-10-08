@@ -53,7 +53,7 @@ const App: React.FC = () => {
             <Route path="/RegisterExam" exact={true}>
               <RegisterExam />
             </Route>
-            <Route path="/Certificate" exact={true}>
+            <Route path="/page/Certificate" exact={true}>
               <Certificate />
             </Route>
             <Route path="/login" exact={true}>

@@ -117,12 +117,10 @@ const Certificate: React.FC = () => {
                                             </IonCardTitle>
                                             {(true) ?
                                                 ((true) ?
-                                                <>
-                                                </>
-                                                : null
                                                     //   @ts-ignore 
-                                                    // <Participant UserData={[item, UserInfo]} />
+                                                    <Participant UserData={[item, UserInfo]} />
                                                     // //   @ts-ignore 
+                                                    : null
                                                     // : <Winner UserData={[item, UserInfo]} />
                                                 ) :
                                                 (
