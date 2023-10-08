@@ -4,8 +4,8 @@ import Webcam from 'webcam-easy';
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Axios from "axios";
 import { API } from "../../constants";
+import { Axios } from "axios";
 
 export const Test = () => {
     const [SelectedAnswer, setSelectedAnswer] = useState('')
