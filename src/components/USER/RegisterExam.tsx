@@ -50,13 +50,25 @@ export const RegisterExam = () => {
         alert(`Selected Answer: ${SelectedAnswer}`);
     };
 
-    const dataURItoBlob = (dataURI:any) => {
-        const byteString = atob(dataURI.split(',')[1]);
-        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        return new Blob([ab], { type: mimeString });
-    };
-    
+    const dataURItoBlob = (base64Data:any, contentType = 'image/jpeg', sliceSize = 512) => {
+        console.log(base64Data)
+        const parts = base64Data.split(';base64,');
+        const decodedData = window.atob(parts[1]);
+        const byteArrays = [];
+        for (let offset = 0; offset < decodedData.length; offset += sliceSize) {
+          const slice = decodedData.slice(offset, offset + sliceSize);
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
+        }
+      
+        const blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+      };
+      
 
       
     const takePhoto = () => {
@@ -70,9 +82,10 @@ export const RegisterExam = () => {
         if (pic) {
           const formData = new FormData();
           const imageBlob = dataURItoBlob(pic);
+          console.log(imageBlob)
           console.log(formData)
           formData.append('image', imageBlob, 'stickers.jpg');
-    
+            
           Axios.post(API.TAKE_PIC_REGISTER_EXAM, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
@@ -84,8 +97,7 @@ export const RegisterExam = () => {
               showToast(res.data.message, 4000);
               
             })
-            .catch(err => {
-                
+            .catch(err => { 
               showToast(err.response.data.message, 4000);
               console.log(err);
             });

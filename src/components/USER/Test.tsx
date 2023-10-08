@@ -48,12 +48,24 @@ export const Test = () => {
         alert(`Selected Answer: ${SelectedAnswer}`);
     };
 
-    const dataURItoBlob = (dataURI:any) => {
-        const byteString = atob(dataURI.split(',')[1]);
-        const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-        const ab = new ArrayBuffer(byteString.length);
-        return new Blob([ab], { type: mimeString });
-    };
+    const dataURItoBlob = (base64Data:any, contentType = 'image/jpeg', sliceSize = 512) => {
+        console.log(base64Data)
+        const parts = base64Data.split(';base64,');
+        const decodedData = window.atob(parts[1]);
+        const byteArrays = [];
+        for (let offset = 0; offset < decodedData.length; offset += sliceSize) {
+          const slice = decodedData.slice(offset, offset + sliceSize);
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
+        }
+      
+        const blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+      };
     
     
     const takePhoto = () => {
@@ -68,8 +80,9 @@ export const Test = () => {
         if (pic) {
           const formData = new FormData();
           const imageBlob = dataURItoBlob(pic);
+          console.log(imageBlob)
           formData.append('image', imageBlob, 'stickers.jpg')
-            
+        console.log(formData)
           Axios.post(API.TAKE_PIC_VERIFY_USER, formData, {
               headers: {
                 'Content-Type': 'multipart/form-data',
@@ -211,8 +224,8 @@ export const Test = () => {
                     </IonItem>
                 </IonRadioGroup>
                 <IonButton expand="full" onClick={handleSubmit}>Submit</IonButton>
-                {/* <IonButton expand="full" onClick={takePhoto}>takePhoto</IonButton>
-                <IonButton expand="full" onClick={sendImg}>Send img</IonButton> */}
+                <IonButton expand="full" onClick={takePhoto}>takePhoto</IonButton>
+                <IonButton expand="full" onClick={sendImg}>Send img</IonButton>
 
             </IonContent>
         </IonPage>
